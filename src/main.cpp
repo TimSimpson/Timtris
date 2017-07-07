@@ -4,12 +4,15 @@
 #include <lp3/sims.hpp>
 #include <lp3/main.hpp>
 
+#include "View.hpp"
+
 namespace core = lp3::core;
 namespace gfx = lp3::gfx;
 namespace input = lp3::input;
 namespace sims = lp3::sims;
 namespace sdl = lp3::sdl;
 
+namespace timtris = lp3::timtris;
 
 int _main(core::PlatformLoop & loop) {
     sdl::SDL2 sdl2(SDL_INIT_VIDEO);
@@ -22,6 +25,8 @@ int _main(core::PlatformLoop & loop) {
 
     gfx::Window window("Timtris", glm::vec2{ 640, 480 });
     glEnable(GL_DEPTH_TEST);
+
+    timtris::View view{media};
 
     const std::int64_t ms_per_update = 1000 / 60;  //16 ms for 60 fps
     sims::GameClock clock(ms_per_update);
@@ -51,9 +56,7 @@ int _main(core::PlatformLoop & loop) {
 
         // Draw some graphics
 
-        window.render([](const glm::mat4 & m) {
-            // Do nothing...
-        });
+        window.render(std::ref(view));
 
         return !quit;
     });

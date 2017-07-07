@@ -34,14 +34,14 @@ static GfxSprite * scoreSprite[1];
 static GfxSprite * gameOverSprite[1];
 
 // Gfx
-static GfxImageID titleScreenImage;
-static GfxImageID optionScreenImage;
-static GfxImageID backgroundImage;
-static GfxImageID title;
-static GfxImageID gameOver;
-static GfxImageID gameBg;
-static GfxImageID scoreText;
-static GfxMapImageID gridTiles;
+static gfx::Texture titleScreenImage;
+static gfx::Texture optionScreenImage;
+static gfx::Texture backgroundImage;
+static gfx::Texture title;
+static gfx::Texture gameOver;
+static gfx::Texture gameBg;
+static gfx::Texture scoreText;
+static gfx::Texture gridTiles;
 
 // Options
 static GfxLayer * optionsLayer;
@@ -66,51 +66,51 @@ static int TimtrisState;
 
 void TimtrisStartUp()
 {
-     GfxPixel colorKey[2];
-     colorKey[0].blue = 128;
-     colorKey[0].green = 0;
-     colorKey[0].red = 255;
-     colorKey[0].alpha = 0;
-     colorKey[1].blue = 0;//61;
-     colorKey[1].green = 0;//39;
-     colorKey[1].red = 0;//37;
-     colorKey[1].alpha = 50;//100;
+     // GfxPixel colorKey[2];
+     // colorKey[0].blue = 128;
+     // colorKey[0].green = 0;
+     // colorKey[0].red = 255;
+     // colorKey[0].alpha = 0;
+     // colorKey[1].blue = 0;//61;
+     // colorKey[1].green = 0;//39;
+     // colorKey[1].red = 0;//37;
+     // colorKey[1].alpha = 50;//100;
 
-     screen = GfxGetScreen(0);
-     if ((title = screen->GetImageID("TimtrisTitle.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
-         ErrOutWriteLineP(0, "Error getting testbm.bmp");
-         return;// false;
-     }
-     if ((gameOver = screen->GetImageID("TimtrisGameOver.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
-         ErrOutWriteLineP(0, "Error getting testbm.bmp");
-         return;// false;
-     }
-     if ((gameBg = screen->GetImageID("Timtris.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
-         ErrOutWriteLineP(0, "Error getting testbm.bmp");
-         return; //false;
-     }
-     if ((gridTiles = screen->GetMapImageID("TimtrisTiles.bmp", colorKey, 2, 32, 32)) == -1){//pixel, 128, 128)) == -1){
-         ErrOutWriteLineP(0, "Error getting testbm.bmp");
-         return; //false;
-     }
-     if ((backgroundImage = screen->GetImageID("tetBg.bmp", colorKey, 0)) == -1){
-         ErrOutWriteLineP(0, "Error getting SlugBearAndTugWatchVegtableStealer.bmp");
-         return; //false;
-     }
-     if ((titleScreenImage = screen->GetImageID("TimtrisTitle.bmp", colorKey, 0)) == -1){
-         ErrOutWriteLineP(0, "Error getting TimtrisTitle.bmp");
-         return; //false;
-     }
-     if ((optionScreenImage = screen->GetImageID("OptionScreen.bmp", colorKey, 0)) == -1){
-         ErrOutWriteLineP(0, "Error getting SlugBearAndTugWatchVegtableStealer.bmp");
-         return; //false;
-     }
+     // screen = GfxGetScreen(0);
+     // if ((title = screen->GetImageID("TimtrisTitle.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting testbm.bmp");
+     //     return;// false;
+     // }
+     // if ((gameOver = screen->GetImageID("TimtrisGameOver.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting testbm.bmp");
+     //     return;// false;
+     // }
+     // if ((gameBg = screen->GetImageID("Timtris.bmp", colorKey, 1)) == -1){//pixel, 128, 128)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting testbm.bmp");
+     //     return; //false;
+     // }
+     // if ((gridTiles = screen->GetMapImageID("TimtrisTiles.bmp", colorKey, 2, 32, 32)) == -1){//pixel, 128, 128)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting testbm.bmp");
+     //     return; //false;
+     // }
+     // if ((backgroundImage = screen->GetImageID("tetBg.bmp", colorKey, 0)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting SlugBearAndTugWatchVegtableStealer.bmp");
+     //     return; //false;
+     // }
+     // if ((titleScreenImage = screen->GetImageID("TimtrisTitle.bmp", colorKey, 0)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting TimtrisTitle.bmp");
+     //     return; //false;
+     // }
+     // if ((optionScreenImage = screen->GetImageID("OptionScreen.bmp", colorKey, 0)) == -1){
+     //     ErrOutWriteLineP(0, "Error getting SlugBearAndTugWatchVegtableStealer.bmp");
+     //     return; //false;
+     // }
 
-     if ((scoreText = screen->GetMapImageID("scoreText.bmp", colorKey, 1, 16, 16)) == -1)
-     {
-         ErrOutWriteLineP(0, "Error getting scoreText.bmp");
-         return;
-     }
+     // if ((scoreText = screen->GetMapImageID("scoreText.bmp", colorKey, 1, 16, 16)) == -1)
+     // {
+     //     ErrOutWriteLineP(0, "Error getting scoreText.bmp");
+     //     return;
+     // }
 
      control1 = LpInputGetControl(0);
 
