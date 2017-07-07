@@ -1,6 +1,3 @@
-#ifndef TimtrisGRID_CPP
-#define TimtrisGRID_CPP
-
 #include "TimtrisGrid.h"
 #include "../Engine/ErrOut.h"
 
@@ -226,5 +223,3 @@ bool TimtrisGrid::Update()
        flashColor = 1;
     return false;
 }
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef TimtrisPLAYER_CPP
-#define TimtrisPLAYER_CPP
-
 #include "TimtrisPlayer.h"
 #include "../Engine/LpInput.h"
 #include "../Engine/ErrOut.h"
@@ -330,5 +327,3 @@ void TimtrisPlayer::Update()
         grid->PlaceTetrad(x, y, tetrad, square);
     }
 }
-
-#endif

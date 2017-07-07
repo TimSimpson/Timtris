@@ -1,6 +1,3 @@
-#ifndef TimtrisTETRAD_CPP
-#define TimtrisTETRAD_CPP
-
 #include "TimtrisTetrad.h"
 
 //10 x 17
@@ -188,5 +185,3 @@ bool TimtrisTetrad::Block(int x, int y)
     }
     return (blocks[(width * j) + i] == 'X');
 }
-
-#endif

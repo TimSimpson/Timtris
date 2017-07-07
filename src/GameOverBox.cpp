@@ -1,6 +1,3 @@
-#ifndef GAMEOVERBOX_C
-#define GAMEOVERBOX_C
-
 #include "GameOverBox.h"
 
 GameOverBox::GameOverBox(GfxScreen * screen, GfxMapImageID textTiles)
@@ -12,12 +9,12 @@ GameOverBox::GameOverBox(GfxScreen * screen, GfxMapImageID textTiles)
     colorKey[0].alpha = 0;
     GfxPixel stdAlpha;
     stdAlpha.alpha = 255;
-     
+
     //16 x 5
     // 14 x 3
     int width = 8;// of score box
     int height = 8;
-    layer = new GfxLayer(screen, textTiles, 
+    layer = new GfxLayer(screen, textTiles,
                          16, 16, 16 * width, 16 * height);
     //96
     layer->SetBoxTiles(96 + 9, 96 + 5, 96 + 4,
@@ -25,8 +22,8 @@ GameOverBox::GameOverBox(GfxScreen * screen, GfxMapImageID textTiles)
                        96 + 2, 96 + 5, 96 + 7);
     // Make invisible.
     layer->Clear(0, 0, 16, 16, 96 + 10);
-    
-    
+
+
     countDown = 0;
     state = 0;
 }
@@ -157,5 +154,3 @@ bool GameOverBox::Update()
          }
      }
 }
-
-#endif

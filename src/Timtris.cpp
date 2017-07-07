@@ -1,6 +1,3 @@
-#ifndef FILE_Timtris_C
-#define FILE_Timtris_C
-
 #include "../LE.h"
 #include "../Engine/LpInput.h"
 #include "../Engine/Gfx.h"
@@ -1046,5 +1043,3 @@ void TimtrisUpdate()
      refreshGrid();
 
 }*/
-
-#endif

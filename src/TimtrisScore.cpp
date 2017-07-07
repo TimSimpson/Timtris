@@ -1,8 +1,6 @@
-#ifndef TimtrisSCORE_CPP
-#define TimtrisSCORE_CPP
-
 #include "TimtrisScore.h"
 #include "../Engine/ErrOut.h"
+
 TimtrisScore::TimtrisScore(GfxScreen * screen, GfxMapImageID textTiles)
 {
     score = 0;
@@ -17,7 +15,7 @@ TimtrisScore::TimtrisScore(GfxScreen * screen, GfxMapImageID textTiles)
 
     //16 x 5
     // 14 x 3
-     int width = 8;// of score box
+    int width = 8;// of score box
     int height = 8;
     layer = new GfxLayer(screen, textTiles,
                          16, 16, 16 * width, 16 * height);
@@ -96,5 +94,3 @@ int TimtrisScore::GetScore()
 {
     return score;
 }
-
-#endif
