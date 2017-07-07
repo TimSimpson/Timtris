@@ -189,7 +189,6 @@ void TimtrisPlayer::Update()
 
      ErrOutWriteLine("********* d");
 
-    //    ErrOutWriteLine("What the fuck is going on?");
     if (checkForLines)
     {
         if (checkForLine(true))

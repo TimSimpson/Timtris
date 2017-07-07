@@ -194,8 +194,7 @@ static void gameStartUp()
      sfxChannel->SetToSource(streamMusic);
      sfxChannel->Play();
 
-     // GD it, why the fuck isn't this working anymore?!
-     // It worked the last damn time I opened this program...
+
      ErrOutWriteLine("Game start");
      ErrOutWrite("Players ");
      ErrOutWriteNumber(playerCount);
