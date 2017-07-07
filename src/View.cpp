@@ -19,8 +19,15 @@ public:
         titleScreenImage{ IMG_Load_RW(media.load("timtrisTitle.png"), 0)},
         optionScreenImage{ IMG_Load_RW(media.load("OptionScreen.png"), 0)},
         scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0)},
-		elements{ 10 }
+		bg_elements{ 4 }
     {
+		gfx::Quad<gfx::TexVert> backgroundSprite = bg_elements.add_quad();
+
+		gfx::upright_quad(
+			backgroundSprite, 
+			glm::vec2{ 0.0f, 0.0f }, glm::vec2{ 640.0f, 480.0f }, 0.0f,		 
+			glm::vec2{ 0, 0 }, glm::vec2{ 1.0f, 1.0f });
+
     }
 
     void operator()(const glm::mat4 & previous) {
@@ -28,9 +35,8 @@ public:
 
         program.use();
         program.set_mvp(_2d);
-        program.set_texture(title.gl_id());
-        program.draw(elements);
-
+        program.set_texture(titleScreenImage.gl_id());
+        program.draw(bg_elements);
     }
 
 private:
@@ -46,7 +52,7 @@ private:
     gfx::Texture optionScreenImage;
     gfx::Texture scoreText;
 
-    gfx::ElementWriter<gfx::TexVert> elements;
+	gfx::ElementWriter<gfx::TexVert> bg_elements;	
 
 };
 

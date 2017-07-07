@@ -114,18 +114,18 @@ void TimtrisStartUp()
 
      control1 = LpInputGetControl(0);
 
-      // Set background image.
-     backgroundSprite = new GfxSprite();
-     backgroundSprite->X = 0;
-     backgroundSprite->Y = 0;
-     backgroundSprite->Width = 640;
-     backgroundSprite->Height = 480;
-     backgroundSprite->ImageID = backgroundImage;
-     backgroundSprite->Frame.x1 = 0;
-     backgroundSprite->Frame.y1 = 0;
-     backgroundSprite->Frame.x2 = 640;//1022;//639;
-     backgroundSprite->Frame.y2 = 480;//767;//439;
-     screen->SetFirstGfxObject(backgroundSprite);
+     //  // Set background image.
+     // backgroundSprite = new GfxSprite();
+     // backgroundSprite->X = 0;
+     // backgroundSprite->Y = 0;
+     // backgroundSprite->Width = 640;
+     // backgroundSprite->Height = 480;
+     // backgroundSprite->ImageID = backgroundImage;
+     // backgroundSprite->Frame.x1 = 0;
+     // backgroundSprite->Frame.y1 = 0;
+     // backgroundSprite->Frame.x2 = 640;//1022;//639;
+     // backgroundSprite->Frame.y2 = 480;//767;//439;
+     // screen->SetFirstGfxObject(backgroundSprite);
 
      // Set options layer
      optionsLayer = new GfxLayer(screen, scoreText, 16, 16,
