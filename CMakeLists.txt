@@ -6,8 +6,10 @@ project(lp3_timtris CXX)
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 add_library(Lp3_Timtris
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/View.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/View.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.cpp
 )
 
 target_include_directories(Lp3_Timtris
@@ -33,6 +35,6 @@ add_executable(Timtris ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 target_link_libraries(Timtris Lp3_Timtris)
 
 if (LP3_SETUP_FOLDERS)
-    # set_target_properties (Lp3_Timtris PROPERTIES FOLDER Timtris)
+    set_target_properties (Lp3_Timtris PROPERTIES FOLDER Timtris)
     set_target_properties (Timtris PROPERTIES FOLDER Timtris)
 endif()

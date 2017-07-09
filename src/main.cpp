@@ -4,7 +4,8 @@
 #include <lp3/sims.hpp>
 #include <lp3/main.hpp>
 
-#include "View.hpp"
+#include "Controller.hpp"
+#include "Timtris.hpp"
 
 namespace core = lp3::core;
 namespace gfx = lp3::gfx;
@@ -21,12 +22,12 @@ int _main(core::PlatformLoop & loop) {
     core::MediaManager base_media;
     core::MediaManager media = base_media.sub_directory("Timtris");
 
-    input::Controls controls;
+	timtris::ControllerManager controls;
 
     gfx::Window window("Timtris", glm::vec2{ 640, 480 });
     glEnable(GL_DEPTH_TEST);
 
-    timtris::View view{media};
+    timtris::Game game{media};
 
     const std::int64_t ms_per_update = 1000 / 60;  //16 ms for 60 fps
     sims::GameClock clock(ms_per_update);
@@ -48,15 +49,15 @@ int _main(core::PlatformLoop & loop) {
 
         controls.update();
 
-        clock.run_updates([](std::int64_t ms) {
-            // Put game stuff here
+        clock.run_updates([&game, &controls](std::int64_t ms) {
+			game.update(controls);
         });
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Draw some graphics
 
-        window.render(std::ref(view));
+        window.render(std::ref(game));
 
         return !quit;
     });

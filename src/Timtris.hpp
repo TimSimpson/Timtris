@@ -2,18 +2,19 @@
 #define FILE_TIMTRIS_VIEW_HPP
 
 #include <glm/glm.hpp>
-#include <lp3/core.hpp>
+#include "Controller.hpp"
 
 
 namespace lp3 { namespace timtris {
 
-class View {
+class Game {
 public:
-    View(lp3::core::MediaManager & media);
-	~View();
+	Game(lp3::core::MediaManager & media);
+	~Game();
 
     void operator()(const glm::mat4 & previous);
 
+	void update(ControllerManager & controls);
 private:
     class Impl;
 
