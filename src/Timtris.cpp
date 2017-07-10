@@ -78,7 +78,7 @@ private:
 class OptionsScreen : public Screen {
 public:
 	OptionsScreen(lp3::core::MediaManager & media)
-		: optionScreenImage{ IMG_Load_RW(media.load("OptionScreen.png"), 0) },
+	: optionScreenImage{ IMG_Load_RW(media.load("OptionScreen.png"), 0) },
 		scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0) },
 		bg_elements{ 4 },
 		text_elements{ (640 / 16) * (480 / 16) * 4 },
@@ -227,6 +227,53 @@ private:
 	int playerCount;
 };
 
+class GameScreen : public Screen {
+public:
+	GameScreen(lp3::core::MediaManager & media)
+	:	bg_image{ IMG_Load_RW(media.load("bg.png"), 0) },
+		scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0) },
+		bg_elements{ 4 },
+		text_elements{ (640 / 16) * (480 / 16) * 4 },
+		options_layer{ { 16, 16 },{ 640 / 16, 480 / 16 } },
+		options_quads{ options_layer.create_quads(text_elements) }		
+	{
+		gfx::upright_quad(
+			bg_elements.add_quad(),
+			glm::vec2{ 0.0f, 0.0f }, glm::vec2{ 640.0f, 480.0f }, 0.5f,
+			glm::vec2{ 0.0f, 0.0f }, glm::vec2{ 1.0f, 1.0f });
+	}
+
+	ScreenId id() const override {
+		return ScreenId::Game;
+	}
+
+	void render(gfx::programs::SimpleTextured & program) override {
+		program.set_texture(bg_image.gl_id());
+		program.draw(bg_elements);
+		///*program.set_texture(scoreText.gl_id());
+		//progra*/m.draw(text_elements);
+	}
+
+	void start_up(ControllerManager & controls) override {
+		const glm::vec2 tile_resolution{ 16.0f, 16.0f };
+		options_layer.set_quads(
+			{ 0.0f, 0.0f }, 0.2f, options_quads,
+			tile_resolution, scoreText.size());
+	}
+
+	ScreenId update(std::int64_t ms, ControllerManager & controls) override {
+		return ScreenId::Game;
+	}
+
+private:
+	gfx::Texture bg_image;
+	gfx::Texture scoreText;
+	gfx::ElementWriter<gfx::TexVert> bg_elements;
+	gfx::ElementWriter<gfx::TexVert> text_elements;
+	gfx::TileMap options_layer;
+	gfx::QuadArray<gfx::TexVert> options_quads;
+};
+
 class Game::Impl {
 public:
 	Impl(lp3::core::MediaManager & media)
@@ -236,6 +283,7 @@ public:
 	{
 		screens.push_back(std::make_unique<TitleScreen>(media));
 		screens.push_back(std::make_unique<OptionsScreen>(media));
+		screens.push_back(std::make_unique<GameScreen>(media));
 
 		current_screen = screens[0].get();
 	}
