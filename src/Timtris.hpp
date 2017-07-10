@@ -14,7 +14,7 @@ public:
 
     void operator()(const glm::mat4 & previous);
 
-	void update(ControllerManager & controls);
+	void update(std::int64_t ms, ControllerManager & controls);
 private:
     class Impl;
 

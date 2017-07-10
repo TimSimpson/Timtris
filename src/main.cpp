@@ -50,7 +50,7 @@ int _main(core::PlatformLoop & loop) {
         controls.update();
 
         clock.run_updates([&game, &controls](std::int64_t ms) {
-			game.update(controls);
+			game.update(ms, controls);
         });
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

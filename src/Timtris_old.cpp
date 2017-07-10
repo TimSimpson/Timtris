@@ -128,24 +128,24 @@ void TimtrisStartUp()
      // screen->SetFirstGfxObject(backgroundSprite);
 
      // Set options layer
-     optionsLayer = new GfxLayer(screen, scoreText, 16, 16,
-                                 640, 480);
-     optionsLayer->Clear(0, 0, 40, 30, 0);
-     optionsLayer->SetBox(0, 0, 40, 30, 96 + 9, 96 + 5, 96 + 4,
-                                        96 + 0, 96 + 0,
-                                        96 + 2, 96 + 5, 96 + 7);
+     // optionsLayer = new GfxLayer(screen, scoreText, 16, 16,
+     //                             640, 480);
+     // optionsLayer->Clear(0, 0, 40, 30, 0);
+     // optionsLayer->SetBox(0, 0, 40, 30, 96 + 9, 96 + 5, 96 + 4,
+     //                                    96 + 0, 96 + 0,
+     //                                    96 + 2, 96 + 5, 96 + 7);
 
-     optionsLayer->SetBox(15, 2, 9, 3, 96 + 9, 96 + 5, 96 + 4,
-                                        96 + 0, 96 + 0,
-                                        96 + 2, 96 + 5, 96 + 7);
-     optionsLayer->Write(16, 3, "OPTIONS", 7);
-     optionsLayer->Write(3, 5, "Players");
-     optionsLayer->Write(3, 7, " 1   2   3   4");
-     optionsLayer->Write(3, 9, "Difficulty", 10);
-                              //123456789012345678901
-     optionsLayer->Write(3, 11, " Easy   Normal   Hard", 21);
-     optionsLayer->Write(3, 13, "Play Field", 10);
-     optionsLayer->Write(3, 15, " Standard Fat", 13);
+     // optionsLayer->SetBox(15, 2, 9, 3, 96 + 9, 96 + 5, 96 + 4,
+     //                                    96 + 0, 96 + 0,
+     //                                    96 + 2, 96 + 5, 96 + 7);
+     // optionsLayer->Write(16, 3, "OPTIONS", 7);
+     // optionsLayer->Write(3, 5, "Players");
+     // optionsLayer->Write(3, 7, " 1   2   3   4");
+     // optionsLayer->Write(3, 9, "Difficulty", 10);
+     //                          //123456789012345678901
+     // optionsLayer->Write(3, 11, " Easy   Normal   Hard", 21);
+     // optionsLayer->Write(3, 13, "Play Field", 10);
+     // optionsLayer->Write(3, 15, " Standard Fat", 13);
 
      playerCount = 1;
 
@@ -172,11 +172,11 @@ static void titleStartUp()
 
 static void optionStartUp()
 {
-     backgroundSprite->ImageID = optionsLayer->GetImageId();
-     TimtrisState = TimtrisSTATE_OPTIONS;
-     optionsGridSize = 10;
-     optionsCursor = 0;
-     lastCursorMove = SysClockGetTime() + 500;
+     // backgroundSprite->ImageID = optionsLayer->GetImageId();
+     // TimtrisState = TimtrisSTATE_OPTIONS;
+     // optionsGridSize = 10;
+     // optionsCursor = 0;
+     // lastCursorMove = SysClockGetTime() + 500;
 }
 
 static void gameOverStartUp()
@@ -291,124 +291,124 @@ static void TimtrisTitleUpdate()
     }
 }
 
-static void TimtrisOptionsUpdate()
-{
-    if (lastCursorMove < SysClockGetTime() && control1->KeyDown())
-    {
-        lastCursorMove = SysClockGetTime() + 500;
-        if (control1->Down())
-        {
-            optionsCursor ++;
-            if (optionsCursor > 3)
-               optionsCursor = 2;
-            return;
-        }
-        if (control1->Up())
-        {
-            optionsCursor --;
-            if (optionsCursor < 0)
-               optionsCursor = 0;
-            return;
-        }
-        if (control1->Button(0))
-        {
-            gameStartUp();
-        }
-        switch(optionsCursor)
-        {
-            case 0:
-            {
-                // Players
-                optionsLayer->SetBox(3, 6, 3, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                optionsLayer->SetBox(7, 6, 3, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                optionsLayer->SetBox(11, 6, 3, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                optionsLayer->SetBox(15, 6, 3, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                if (control1->Left())
-                {
-                    if (playerCount > 1)
-                        playerCount --;
-                }
-                if (control1->Right())
-                {
-                    if (playerCount < 4)
-                        playerCount ++;
-                }
-                if (playerCount == 1)
-                {
-                    optionsLayer->SetBox(3, 6, 3, 3,
-                                     96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                }
-                if (playerCount == 2)
-                {
-                    optionsLayer->SetBox(7, 6, 3, 3,
-                                     96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                }
-                if (playerCount == 3)
-                {
-                    optionsLayer->SetBox(11, 6, 3, 3,
-                                     96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                }
-                if (playerCount == 4)
-                {
-                    optionsLayer->SetBox(15, 6, 3, 3,
-                                     96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                }
-                break;
-            }
-            case 1:
-            {
-                 // DiFFICULTY
-                 break;
-            }
-            case 2:
-            {   // GRID SIZE
-                if (control1->Left())
-                {
-                    if (optionsGridSize == 20)
-                        optionsGridSize = 10;
-                }
-                if (control1->Right())
-                {
-                    if (optionsGridSize == 10)
-                        optionsGridSize = 20;
-                }
-                optionsLayer->SetBox(2, 12, 11, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                optionsLayer->SetBox(12, 12, 5, 3,
-                                     0, 0, 0, 0, 0, 0, 0, 0);
-                 if (optionsGridSize == 10)
-                 {
-                     optionsLayer->SetBox(2, 12, 11, 3,
-                                          96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                 }
-                 if (optionsGridSize == 20)
-                 {
-                     optionsLayer->SetBox(12, 12, 5, 3,
-                                          96 + 9, 96 + 5, 96 + 4,
-                                          96 + 0, 96 + 0,
-                                          96 + 2, 96 + 5, 96 + 7);
-                 }
-            }
-            case 3:
-            {
-            }
-        }
-    }
-}
+// static void TimtrisOptionsUpdate()
+// {
+//     if (lastCursorMove < SysClockGetTime() && control1->KeyDown())
+//     {
+//         lastCursorMove = SysClockGetTime() + 500;
+//         if (control1->Down())
+//         {
+//             optionsCursor ++;
+//             if (optionsCursor > 3)
+//                optionsCursor = 2;
+//             return;
+//         }
+//         if (control1->Up())
+//         {
+//             optionsCursor --;
+//             if (optionsCursor < 0)
+//                optionsCursor = 0;
+//             return;
+//         }
+//         if (control1->Button(0))
+//         {
+//             gameStartUp();
+//         }
+//         switch(optionsCursor)
+//         {
+//             case 0:
+//             {
+//                 // Players
+//                 optionsLayer->SetBox(3, 6, 3, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                 optionsLayer->SetBox(7, 6, 3, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                 optionsLayer->SetBox(11, 6, 3, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                 optionsLayer->SetBox(15, 6, 3, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                 if (control1->Left())
+//                 {
+//                     if (playerCount > 1)
+//                         playerCount --;
+//                 }
+//                 if (control1->Right())
+//                 {
+//                     if (playerCount < 4)
+//                         playerCount ++;
+//                 }
+//                 if (playerCount == 1)
+//                 {
+//                     optionsLayer->SetBox(3, 6, 3, 3,
+//                                      96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                 }
+//                 if (playerCount == 2)
+//                 {
+//                     optionsLayer->SetBox(7, 6, 3, 3,
+//                                      96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                 }
+//                 if (playerCount == 3)
+//                 {
+//                     optionsLayer->SetBox(11, 6, 3, 3,
+//                                      96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                 }
+//                 if (playerCount == 4)
+//                 {
+//                     optionsLayer->SetBox(15, 6, 3, 3,
+//                                      96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                 }
+//                 break;
+//             }
+//             case 1:
+//             {
+//                  // DiFFICULTY
+//                  break;
+//             }
+//             case 2:
+//             {   // GRID SIZE
+//                 if (control1->Left())
+//                 {
+//                     if (optionsGridSize == 20)
+//                         optionsGridSize = 10;
+//                 }
+//                 if (control1->Right())
+//                 {
+//                     if (optionsGridSize == 10)
+//                         optionsGridSize = 20;
+//                 }
+//                 optionsLayer->SetBox(2, 12, 11, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                 optionsLayer->SetBox(12, 12, 5, 3,
+//                                      0, 0, 0, 0, 0, 0, 0, 0);
+//                  if (optionsGridSize == 10)
+//                  {
+//                      optionsLayer->SetBox(2, 12, 11, 3,
+//                                           96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                  }
+//                  if (optionsGridSize == 20)
+//                  {
+//                      optionsLayer->SetBox(12, 12, 5, 3,
+//                                           96 + 9, 96 + 5, 96 + 4,
+//                                           96 + 0, 96 + 0,
+//                                           96 + 2, 96 + 5, 96 + 7);
+//                  }
+//             }
+//             case 3:
+//             {
+//             }
+//         }
+//     }
+// }
 
 static void TimtrisGameOverUpdate()
 {

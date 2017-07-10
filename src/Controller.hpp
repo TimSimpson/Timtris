@@ -56,10 +56,44 @@ public:
 	// True if any controllers are hitting accept.
 	bool any_accept();
 
+	inline Pad & operator[](const std::size_t index) {
+		LP3_ASSERT(index < pads.size());
+		LP3_ASSERT(pads[index]);
+		return *pads[index];
+	}
+
     void update();
 private:
 	lp3::input::Controls controls;
 	std::vector<std::unique_ptr<Pad>> pads;
+};
+
+// When these states are checked they return true, then for 500 ms will
+// return false (this value is bled out as `update` gets called) before
+// returning true.
+class CursorPad {
+public:
+	CursorPad();
+
+	bool accept() const;
+	
+	bool cancel() const;
+
+	bool down() const;
+
+	void init(ControllerManager & controls);
+
+	bool left() const;
+
+	bool right() const;
+	
+	bool up() const;
+
+	void update(ControllerManager & controller, const std::int64_t ms);
+
+private:	
+	std::array<int, 6> back_off_time;
+	std::array<bool, 6> state;
 };
 
 }   }
