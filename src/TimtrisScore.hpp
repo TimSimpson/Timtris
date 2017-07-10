@@ -1,22 +1,24 @@
 #ifndef TimtrisSCORE_H
 #define TimtrisSCORE_H
 
+#include <lp3/gfx.hpp>
 
-#include "../Engine/GfxLayer.h"
+namespace lp3 { namespace timtris {
 
 class TimtrisScore
 {
 public:
-    TimtrisScore(GfxScreen * screen, GfxMapImageID textTiles);
+    TimtrisScore();
     void AddLinePoints();
     void AddPoints(int number);
     int GetScore();
-    GfxImageID GetImageID();
-    ~TimtrisScore();
+    gfx::TileMap & get_layer();
 private:
-    GfxLayer * layer;
+    gfx::TileMap layer;
     int score;
     int lines;
 };
+
+}   }
 
 #endif

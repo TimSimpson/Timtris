@@ -1,4 +1,7 @@
-#include "TimtrisTetrad.h"
+#include "TimtrisTetrad.hpp"
+
+
+namespace lp3 {	namespace timtris {
 
 //10 x 17
 // []              []      []
@@ -155,7 +158,7 @@ void TimtrisTetrad::Rotate(bool clockWise)
         rotateIndex -= 4;
 }
 
-    /* Functions to "Get" the actual data on how the block maps out. */
+// Functions to "Get" the actual data on how the block maps out.
 bool TimtrisTetrad::Block(int x, int y)
 {
     // Traverse from 0 to height
@@ -185,3 +188,5 @@ bool TimtrisTetrad::Block(int x, int y)
     }
     return (blocks[(width * j) + i] == 'X');
 }
+
+}	}

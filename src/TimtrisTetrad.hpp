@@ -1,7 +1,9 @@
 #ifndef TimtrisTETRAD_H
 #define TimtrisTETRAD_H
 
-#include "../LE.h"
+#include <lp3/core.hpp>
+
+namespace lp3 { namespace timtris {
 
 class TimtrisTetrad
 {
@@ -18,11 +20,13 @@ public:
     void SetRotation(int rotateIndex);
     void SetTetrad(int tetradIndex);
 private:
-    charptr blocks;
-    u32 height;
+    const char * blocks;
+    std::uint32_t height;
     int rotateIndex;
     int tetradIndex;
-    u32 width;
+	std::uint32_t width;
 };
+
+}	}
 
 #endif

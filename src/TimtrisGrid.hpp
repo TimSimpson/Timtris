@@ -1,9 +1,10 @@
 #ifndef TimtrisGRID_H
 #define TimtrisGRID_H
 
-#include "../Engine/Gfx.h"
-#include "../Engine/SysClock.h"
-#include "TimtrisTetrad.h"
+#include <lp3/gfx.hpp>
+#include "TimtrisTetrad.hpp"
+
+namespace lp3 {	namespace timtris {
 
 class TimtrisSquare
 {
@@ -13,9 +14,10 @@ public:
     bool Stopped;
 
     TimtrisSquare()
+	:	PlayerIndex(-1),
+		Color(0),
+		Stopped(false)
     {
-        PlayerIndex = -1;
-        Stopped = false;
     }
 };
 
@@ -24,12 +26,12 @@ class TimtrisGrid
 public:
     TimtrisGrid(int gridWidth, int gridHeight,
                int squareWidth, int squareHeight,
-               GfxMapImageID tiles, int tileCount);
+               int tileCount);
     void Clear();
     bool CheckForSpace(int x, int y, TimtrisTetrad * tetrad, int playerIndex);
     void EliminateLine(int line);
     TimtrisSquare GetGrid(int x, int y);
-    GfxSprite * GetSprite();
+    // GfxSprite * GetSprite();
     int GridHeight();
     int GridWidth();
     void PlaceTetrad(int x, int y, TimtrisTetrad * tetrad, TimtrisSquare square);
@@ -37,20 +39,23 @@ public:
     void SetGrid(int x, int y, TimtrisSquare tile);
     // If this function returns false, it's not safe to proceed.
     // So don't.
-    bool Update();
-    ~TimtrisGrid();
+    bool Update(const std::int64_t ms);
 private:
-    ClockTimeInt finishFlashTime;
+    std::int64_t finishFlashTime;
     int flashLine;
     int flashColor;
-    TimtrisSquare * grid;//[17][10];
+    std::vector<TimtrisSquare> grid;//[17][10];
     int gridWidth;
     int gridHeight;
     int squareWidth;
     int squareHeight;
-    GfxSprite * sprite;
-    GfxMapImageID tiles;
+    // GfxSprite * sprite;
+    // GfxMapImageID tiles;
     int tileCount;
+	gfx::TileMap tile_map;
 
 };
+
+}	}
+
 #endif

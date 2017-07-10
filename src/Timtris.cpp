@@ -1,6 +1,7 @@
 #include "Timtris.hpp"
 #include <lp3/gfx.hpp>
 #include "Controller.hpp"
+#include "TimtrisGrid.hpp"
 
 namespace lp3 { namespace timtris {
 
@@ -232,10 +233,12 @@ public:
 	GameScreen(lp3::core::MediaManager & media)
 	:	bg_image{ IMG_Load_RW(media.load("bg.png"), 0) },
 		scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0) },
+		timtris_tiles{ IMG_Load_RW(media.load("TimtrisTiles.png"), 0) },
 		bg_elements{ 4 },
 		text_elements{ (640 / 16) * (480 / 16) * 4 },
 		options_layer{ { 16, 16 },{ 640 / 16, 480 / 16 } },
-		options_quads{ options_layer.create_quads(text_elements) }		
+		options_quads{ options_layer.create_quads(text_elements) },
+		grid(nullptr)
 	{
 		gfx::upright_quad(
 			bg_elements.add_quad(),
@@ -259,6 +262,24 @@ public:
 		options_layer.set_quads(
 			{ 0.0f, 0.0f }, 0.2f, options_quads,
 			tile_resolution, scoreText.size());
+
+		// Initialize grid.
+		// TODO: Pass grid size in here from options instead of "10"
+		grid = std::make_unique<TimtrisGrid>(10, 17, 32, 32, 7);
+		grid->Clear();
+
+		// Initialize player score.
+		// TODO: Pass in playerCount from Options
+		const int playerCount = 1;
+		for (int i = 0; i < playerCount; i++)
+		{
+			playerScore[i] = new TimtrisScore(screen, scoreText);
+			gameOverBox[i] = new GameOverBox(screen, scoreText);
+			// Initialize player.
+			players[i] = new TimtrisPlayer(i, playerScore[0], gameOverBox[0]);
+			players[i]->SetGrid(grid);
+			players[i]->SetControl(LpInputGetControl(i));
+		}
 	}
 
 	ScreenId update(std::int64_t ms, ControllerManager & controls) override {
@@ -268,10 +289,13 @@ public:
 private:
 	gfx::Texture bg_image;
 	gfx::Texture scoreText;
+	gfx::Texture timtris_tiles;
 	gfx::ElementWriter<gfx::TexVert> bg_elements;
 	gfx::ElementWriter<gfx::TexVert> text_elements;
 	gfx::TileMap options_layer;
 	gfx::QuadArray<gfx::TexVert> options_quads;
+
+	std::unique_ptr<TimtrisGrid> grid;
 };
 
 class Game::Impl {

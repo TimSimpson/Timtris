@@ -1,55 +1,33 @@
-#include "TimtrisGrid.h"
-#include "../Engine/ErrOut.h"
+#include "TimtrisGrid.hpp"
 
-static GfxScreen * screen = nullptr;
+
+namespace lp3 {	namespace timtris {
 
 TimtrisGrid::TimtrisGrid(int gridWidth, int gridHeight,
                        int squareWidth, int squareHeight,
-                       GfxMapImageID tiles, int tileCount)
+                       int tileCount)
+:	finishFlashTime{0},
+	flashLine{0},
+	flashColor{0},
+	grid{ gridWidth * gridHeight, TimtrisSquare{} },
+	gridWidth{ gridWidth },
+	gridHeight{ gridHeight },
+	squareWidth{squareWidth},
+	squareHeight{squareHeight},
+	// tiles{ tiles },
+	tileCount{ tileCount },
+	tile_map{ { squareWidth, squareHeight },{ gridWidth, gridHeight } }
 {
-   this->gridWidth = gridWidth;
-   this->gridHeight = gridHeight;
-   this->squareWidth = squareWidth;
-   this->squareHeight = squareHeight;
-   sprite = new GfxSprite();
-   sprite->Width = gridWidth * squareWidth;
-   sprite->Height = gridHeight * squareHeight;
-   GfxPixel pixel;
-   pixel.blue = 255;
-   pixel.red  = 0;
-   pixel.green = 0;
-   pixel.alpha = 255;
-   sprite->ImageID = GfxGetScreen(0)->GetImageID(pixel,
-                   (int)sprite->Width, (int)sprite->Height);
-   sprite->Frame.x1 = 0;
-   sprite->Frame.y1 = 0;
-   sprite->Frame.x2 = (int)sprite->Width - 1;
-   sprite->Frame.y2 = (int)sprite->Height - 1;
-
-   this->tiles = tiles;
-   finishFlashTime = SysClockGetTime();
-   this->tileCount = tileCount;
-
-   flashLine = 0;
-
-   grid = new TimtrisSquare[gridWidth * gridHeight];
-   if (screen == nullptr)
-   {
-       screen = GfxGetScreen(0);
-   }
+	// Original code created a sprite that it drew tiles to,
+	// with gridWidth * squareWidth,
+	// gridHeight * squardHeight
 }
 
-TimtrisGrid::~TimtrisGrid()
-{
-    delete [] grid;
-    GfxGetScreen(0)->DeleteImageID(sprite->ImageID);
-    delete sprite;
-}
 
-GfxSprite * TimtrisGrid::GetSprite()
-{
-    return sprite;
-}
+////GfxSprite * TimtrisGrid::GetSprite()
+////{
+////    return sprite;
+////}
 
 int TimtrisGrid::GridHeight()
 {
@@ -81,10 +59,11 @@ TimtrisSquare TimtrisGrid::GetGrid(int x, int y)
     square.Color = -1;
     square.PlayerIndex = -1;
 
+	// TODO: make asserts?
     if (x < 0 || x >= gridWidth)
     {
-        ErrOutWriteLine("X is invalid in TetridGrid::GetGrid.");
-        ErrOutWriteNumber(x);
+        LP3_LOG_ERROR("X is invalid in TetridGrid::GetGrid: %d", x);
+		LP3_ASSERT(false); // in old code but seems like it should not happen
         return square;
     }
     // why -5? Because tetrads start above top of grid.
@@ -92,37 +71,33 @@ TimtrisSquare TimtrisGrid::GetGrid(int x, int y)
     {
         if (y < -5)
         {
-            ErrOutWriteLine("Y is invalid in TetridGrid::GetGrid.");
-            ErrOutWriteNumber(y);
+			LP3_LOG_ERROR("Y is invalid in TetridGrid::GetGrid. %d", y);
         }
+		LP3_ASSERT(false); // in old code but seems like it should not happen
         return square;
-
     }
     return grid[(y * gridWidth) + x];
 }
 
 void TimtrisGrid::SetGrid(int x, int y, TimtrisSquare square)
 {
-
+	// TODO: Make asserts?
     if (x < 0 || x >= gridWidth)
     {
-        ErrOutWriteLineP(0, "X is invalid in TetridGrid::SetGrid.");
-        ErrOutWriteNumber(x);
+		LP3_LOG_ERROR("X is invalid in TetridGrid::SetGrid. %d", x);
+		LP3_ASSERT(false); // in old code but seems like it should not happen
         return;
     }
     if (y < 0 || y >= gridHeight)
     {
         if (y < -5)
         {
-            ErrOutWriteLineP(0, "Y is invalid in TetridGrid::SetGrid.");
-            ErrOutWriteNumber(y);
+			LP3_LOG_ERROR( "Y is invalid in TetridGrid::SetGrid. %d", y);
+			LP3_ASSERT(false); // in old code but seems like it should not happen
         }
         return;
     }
-    screen->DrawMap(sprite->ImageID, tiles,
-            x * squareWidth,
-            y * squareHeight,
-            (u16)(square.Color));
+	tile_map.write({ x, y }, square.Color);
     grid[(y * gridWidth) + x] = square;
 }
 
@@ -181,37 +156,41 @@ void TimtrisGrid::EliminateLine(int line)
 {
      // Turn on flash time so the grid will handle flashing.
      // Set it to stop flashing in some time + SysClockGetTime().
-     finishFlashTime = SysClockGetTime() + 1000;
+     finishFlashTime = 1000;
      flashLine = line;
      flashColor = 1;
 }
 
-bool TimtrisGrid::Update()
+bool TimtrisGrid::Update(const std::int64_t ms)
 {
     TimtrisSquare square;
-    if (SysClockGetTime() > finishFlashTime)
-    {   // If a line was flashing and the time for flashing has ended,
-        // eliminate the line and move everything down.
-        if (flashColor > 0)
-        {
-            flashColor = 0;
-            for (int i = 0; i < GridWidth(); i ++)
-            {
-                square = GetGrid(i, flashLine);
-                square.Color = flashColor;
-                SetGrid(i, flashLine, square);
-            }
-            // Move line up.
-            for (int j = flashLine; j > 0; j --)
-            {
-                for (int i = 0; i < GridWidth(); i ++)
-                {
-                    SetGrid(i, j, GetGrid(i, j - 1));
-                }
-            }
-        }
-        return true;
-    }
+	if (finishFlashTime >= 0) {
+		finishFlashTime -= ms;
+		if (finishFlashTime <= 0) {
+			// If a line was flashing and the time for flashing has ended,
+			// eliminate the line and move everything down.
+			if (flashColor > 0)
+			{
+				flashColor = 0;
+				for (int i = 0; i < GridWidth(); i++)
+				{
+					square = GetGrid(i, flashLine);
+					square.Color = flashColor;
+					SetGrid(i, flashLine, square);
+				}
+				// Move line up.
+				for (int j = flashLine; j > 0; j--)
+				{
+					for (int i = 0; i < GridWidth(); i++)
+					{
+						SetGrid(i, j, GetGrid(i, j - 1));
+					}
+				}
+			}
+			return true;
+		}
+	}
+
     for (int i = 0; i < GridWidth(); i ++)
     {
         square = GetGrid(i, flashLine);
@@ -223,3 +202,5 @@ bool TimtrisGrid::Update()
        flashColor = 1;
     return false;
 }
+
+}	}

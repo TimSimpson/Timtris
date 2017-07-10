@@ -10,6 +10,12 @@ add_library(Lp3_Timtris
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisGrid.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisGrid.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisScore.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisScore.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisTetrad.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisTetrad.cpp
 )
 
 target_include_directories(Lp3_Timtris
