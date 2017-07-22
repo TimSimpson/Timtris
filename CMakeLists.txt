@@ -8,10 +8,14 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 add_library(Lp3_Timtris
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Controller.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameOverBox.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameOverBox.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timtris.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisGrid.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisGrid.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisPlayer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisPlayer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisScore.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisScore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TimtrisTetrad.hpp

@@ -2,6 +2,7 @@
 #include <lp3/gfx.hpp>
 #include "Controller.hpp"
 #include "TimtrisGrid.hpp"
+#include "TimtrisScore.hpp"
 
 namespace lp3 { namespace timtris {
 

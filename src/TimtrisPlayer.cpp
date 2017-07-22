@@ -3,6 +3,8 @@
 #include "../Engine/ErrOut.h"
 #include "../Engine/Sfx.h"
 
+namespace lp3 { namespace timtris {
+
 TimtrisPlayer::TimtrisPlayer(int playerIndex,
                            TimtrisScore * playerScore,
                            GameOverBox * goBox)
@@ -327,3 +329,5 @@ void TimtrisPlayer::Update()
         grid->PlaceTetrad(x, y, tetrad, square);
     }
 }
+
+}   }   // end lp3::timtris

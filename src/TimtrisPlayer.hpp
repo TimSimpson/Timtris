@@ -1,15 +1,13 @@
-#ifndef TimtrisPLAYER_H
-#define TimtrisPLAYER_H
-
-#include "../Engine/SysClock.h"
-#include "../Engine/LpInput.h"
-#include "../Engine/Sfx.h"
+#ifndef TimtrisPLAYER_HPP
+#define TimtrisPLAYER_HPP
 
 #include "GameOverBox.h"
 #include "TimtrisGrid.h"
 #include "TimtrisPlayer.h"
 #include "TimtrisScore.h"
 #include "TimtrisTetrad.h"
+
+namespace lp3 { namespace timtris {
 
 class TimtrisPlayer
 {
@@ -52,5 +50,7 @@ private:
     SfxSample * soundPeur;
     SfxSample * soundStp;
 };
+
+}   }   // end lp3::timtris
 
 #endif

@@ -1,4 +1,6 @@
-#include "GameOverBox.h"
+#include "GameOverBox.hpp"
+
+namespace lp3 { namespace timtris {
 
 GameOverBox::GameOverBox(GfxScreen * screen, GfxMapImageID textTiles)
 {
@@ -154,3 +156,5 @@ bool GameOverBox::Update()
          }
      }
 }
+
+}   }   // end lp3::timtris

@@ -4,6 +4,8 @@
 #include "../Engine/GfxLayer.h"
 #include "../Engine/SysClock.h"
 
+namespace lp3 { namespace timtris {
+
 class GameOverBox
 {
 public:
@@ -23,5 +25,7 @@ private:
     GfxLayer * layer;
     int state;
 };
+
+}   }   // end lp3::timtris
 
 #endif
