@@ -1,15 +1,14 @@
-#ifndef GAMEOVERBOX_H
-#define GAMEOVERBOX_H
+#ifndef TIMTRIS_GAMEOVERBOX_HPP
+#define TIMTRIS_GAMEOVERBOX_HPP
 
-#include "../Engine/GfxLayer.h"
-#include "../Engine/SysClock.h"
+#include <lp3/gfx.hpp>
 
 namespace lp3 { namespace timtris {
 
 class GameOverBox
 {
 public:
-    GameOverBox(GfxScreen * screen, GfxMapImageID textTiles);
+    GameOverBox(gfx::TileMap & textTiles);
     GfxImageID GetImageID();
     int GetState();
     void MakeInvisible();
@@ -22,7 +21,7 @@ public:
 private:
     ClockTimeInt animationTimer;
     int countDown;
-    GfxLayer * layer;
+	gfx::TileMap layer;
     int state;
 };
 
