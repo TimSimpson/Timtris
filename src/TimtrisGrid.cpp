@@ -3,9 +3,10 @@
 
 namespace lp3 {	namespace timtris {
 
-TimtrisGrid::TimtrisGrid(int gridWidth, int gridHeight,
-                       int squareWidth, int squareHeight,
-                       int tileCount)
+TimtrisGrid::TimtrisGrid(lp3::core::MediaManager & media,
+	                     int gridWidth, int gridHeight,
+                         int squareWidth, int squareHeight,
+                         int tileCount)
 :	finishFlashTime{0},
 	flashLine{0},
 	flashColor{0},
@@ -16,11 +17,16 @@ TimtrisGrid::TimtrisGrid(int gridWidth, int gridHeight,
 	squareHeight{squareHeight},
 	// tiles{ tiles },
 	tileCount{ tileCount },
-	tile_map{ { squareWidth, squareHeight },{ gridWidth, gridHeight } }
+	tile_map{ { gridWidth, gridHeight } },
+	element_writer{ gridWidth * gridHeight * 4 },
+	quads{ tile_map.create_quads(element_writer) },
+	texture{ IMG_Load_RW(media.load("TimtrisTiles.png"), 0) }
 {
 	// Original code created a sprite that it drew tiles to,
 	// with gridWidth * squareWidth,
 	// gridHeight * squardHeight
+
+	// { squareWidth, squareHeight }
 }
 
 
@@ -201,6 +207,15 @@ bool TimtrisGrid::Update(const std::int64_t ms)
     if (flashColor >= tileCount)
        flashColor = 1;
     return false;
+}
+
+void TimtrisGrid::render(lp3::gfx::programs::SimpleTextured & program) {
+	tile_map.set_quads(
+		{ 0.0f, 0.0f }, 0.2f, { 16.0f, 16.0f }, quads,
+		{ 16, 16 }, texture.size());
+
+	program.set_texture(texture.gl_id());
+	program.draw(element_writer);
 }
 
 }	}

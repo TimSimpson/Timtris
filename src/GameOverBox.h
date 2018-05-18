@@ -1,4 +1,4 @@
-#ifndef GAMEOVERBOX_H
+ #ifndef GAMEOVERBOX_H
 #define GAMEOVERBOX_H
 
 #include "../Engine/GfxLayer.h"

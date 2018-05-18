@@ -83,7 +83,7 @@ public:
 		scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0) },
 		bg_elements{ 4 },
 		text_elements{ (640 / 16) * (480 / 16) * 4 },
-		options_layer{ { 16, 16 }, { 640 / 16, 480 / 16 } },
+		options_layer(glm::ivec2{ 640 / 16, 480 / 16 }),
 		options_quads{ options_layer.create_quads(text_elements) },
 		optionsCursor{ 0 },
 		optionsGridSize{ 0 },
@@ -97,7 +97,7 @@ public:
 
 	
 
-		// Create border around stuff.
+		// Create border around stuff.		
 		options_layer.write_box(blue_box_tiles, { 0, 0 }, { 40, 30 });
 
 
@@ -208,9 +208,9 @@ public:
 				LP3_ASSERT(false);
 		}	// end giant switch statement
 
-		const glm::vec2 tile_resolution{ 16.0f, 16.0f };
+		const glm::vec2 tile_resolution{ 16.0f, 16.0f };		
 		options_layer.set_quads(
-			{ 0.0f, 0.0f }, 0.2f, options_quads, 
+			{ 0.0f, 0.0f }, 0.2f, { 16.0f, 16.0f }, options_quads,
 			tile_resolution, scoreText.size());		
 		return ScreenId::Options;
 	}
@@ -231,12 +231,13 @@ private:
 class GameScreen : public Screen {
 public:
 	GameScreen(lp3::core::MediaManager & media)
-	:	bg_image{ IMG_Load_RW(media.load("bg.png"), 0) },
+	:	media(media),
+		bg_image{ IMG_Load_RW(media.load("bg.png"), 0) },
 		scoreText{ IMG_Load_RW(media.load("scoreText.png"), 0) },
 		timtris_tiles{ IMG_Load_RW(media.load("TimtrisTiles.png"), 0) },
 		bg_elements{ 4 },
 		text_elements{ (640 / 16) * (480 / 16) * 4 },
-		options_layer{ { 16, 16 },{ 640 / 16, 480 / 16 } },
+		options_layer{ glm::ivec2{ 640 / 16, 480 / 16 } },
 		options_quads{ options_layer.create_quads(text_elements) },
 		grid(nullptr)
 	{
@@ -253,40 +254,46 @@ public:
 	void render(gfx::programs::SimpleTextured & program) override {
 		program.set_texture(bg_image.gl_id());
 		program.draw(bg_elements);
+
 		///*program.set_texture(scoreText.gl_id());
 		//progra*/m.draw(text_elements);
+		if (grid) {
+			grid->render(program);
+		}
 	}
 
 	void start_up(ControllerManager & controls) override {
 		const glm::vec2 tile_resolution{ 16.0f, 16.0f };
 		options_layer.set_quads(
-			{ 0.0f, 0.0f }, 0.2f, options_quads,
+			{ 0.0f, 0.0f }, 0.2f, { 16.0f, 16.0f }, options_quads,
 			tile_resolution, scoreText.size());
 
 		// Initialize grid.
 		// TODO: Pass grid size in here from options instead of "10"
-		grid = std::make_unique<TimtrisGrid>(10, 17, 32, 32, 7);
+		grid = std::make_unique<TimtrisGrid>(media, 10, 17, 32, 32, 7);
 		grid->Clear();
 
 		// Initialize player score.
 		// TODO: Pass in playerCount from Options
-		const int playerCount = 1;
-		for (int i = 0; i < playerCount; i++)
-		{
-			playerScore[i] = new TimtrisScore(screen, scoreText);
-			gameOverBox[i] = new GameOverBox(screen, scoreText);
-			// Initialize player.
-			players[i] = new TimtrisPlayer(i, playerScore[0], gameOverBox[0]);
-			players[i]->SetGrid(grid);
-			players[i]->SetControl(LpInputGetControl(i));
-		}
+		//const int playerCount = 1;
+		//for (int i = 0; i < playerCount; i++)
+		//{
+		//	playerScore[i] = new TimtrisScore(screen, scoreText);
+		//	gameOverBox[i] = new GameOverBox(screen, scoreText);
+		//	// Initialize player.
+		//	players[i] = new TimtrisPlayer(i, playerScore[0], gameOverBox[0]);
+		//	players[i]->SetGrid(grid);
+		//	players[i]->SetControl(LpInputGetControl(i));
+		//}
 	}
 
 	ScreenId update(std::int64_t ms, ControllerManager & controls) override {
+		grid->Update(ms);
 		return ScreenId::Game;
 	}
 
 private:
+	lp3::core::MediaManager & media;
 	gfx::Texture bg_image;
 	gfx::Texture scoreText;
 	gfx::Texture timtris_tiles;

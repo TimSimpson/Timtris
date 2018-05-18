@@ -24,9 +24,10 @@ public:
 class TimtrisGrid
 {
 public:
-    TimtrisGrid(int gridWidth, int gridHeight,
-               int squareWidth, int squareHeight,
-               int tileCount);
+    TimtrisGrid(lp3::core::MediaManager & media,
+		        int gridWidth, int gridHeight,
+                int squareWidth, int squareHeight,
+                int tileCount);
     void Clear();
     bool CheckForSpace(int x, int y, TimtrisTetrad * tetrad, int playerIndex);
     void EliminateLine(int line);
@@ -35,6 +36,7 @@ public:
     int GridHeight();
     int GridWidth();
     void PlaceTetrad(int x, int y, TimtrisTetrad * tetrad, TimtrisSquare square);
+	void render(gfx::programs::SimpleTextured & program);
     void RemoveTetrad(int x, int y, TimtrisTetrad * tetrad);
     void SetGrid(int x, int y, TimtrisSquare tile);
     // If this function returns false, it's not safe to proceed.
@@ -53,7 +55,9 @@ private:
     // GfxMapImageID tiles;
     int tileCount;
 	gfx::TileMap tile_map;
-
+	gfx::ElementWriter<gfx::TexVert> element_writer;
+	gfx::QuadArray<gfx::TexVert> quads;
+	gfx::Texture texture;
 };
 
 }	}

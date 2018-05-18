@@ -1,6 +1,6 @@
 #ifndef FILE_TIMTRIS_VIEW_HPP
-#define FILE_TIMTRIS_VIEW_HPP
 
+#define FILE_TIMTRIS_VIEW_HPP
 #include <glm/glm.hpp>
 #include "Controller.hpp"
 

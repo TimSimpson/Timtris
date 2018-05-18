@@ -15,7 +15,7 @@ namespace {
 	};
 }
 TimtrisScore::TimtrisScore()
-:   layer{{16, 16}, {8, 8}},
+:   layer{{8, 8}},
     score{0},
     lines{0}
 {
@@ -41,7 +41,8 @@ void TimtrisScore::AddLinePoints()
 {
     AddPoints(100);
     lines ++;
-    layer->WriteNumber(1,6, lines, 6);
+	const std::string line_text = str(boost::format("%d") % lines);
+	layer.write({ 1, 6 }, line_text.c_str());
 }
 
 void TimtrisScore::AddPoints(int points)
@@ -60,7 +61,7 @@ void TimtrisScore::AddPoints(int points)
     }
     for ( ; cursor >= 0; cursor --)
     {
-		layer.write({ 1 + cursor, 2 }, 0);//buf[cursor] = 32;
+		layer.write({ 1 + cursor, 2 }, std::uint8_t(0));//buf[cursor] = 32;
     }
 //    layer->Write(1, 3, buf, 13);
 }
