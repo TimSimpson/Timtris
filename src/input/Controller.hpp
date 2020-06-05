@@ -3,7 +3,7 @@
 
 #include <lp3/input.hpp>
 
-namespace lp3 { namespace timtris {
+namespace timtris {
 
 // Maps controls very specifically to this game
 class Pad {
@@ -25,7 +25,7 @@ public:
     }
 
 	inline bool flip() const {
-		return control.state(4) || control.state(5); 
+		return control.state(4) || control.state(5);
 	}
 
     inline bool left() const {
@@ -35,7 +35,7 @@ public:
     inline bool right() const {
         return control.state(3);
     }
-	
+
 	inline bool start() const {
 		return control.state(6);
 	}
@@ -43,7 +43,7 @@ public:
     inline bool up() const {
         return control.state(0);
     }
-	
+
 private:
     lp3::input::Control & control;
 };
@@ -76,7 +76,7 @@ public:
 	CursorPad();
 
 	bool accept() const;
-	
+
 	bool cancel() const;
 
 	bool down() const;
@@ -86,16 +86,16 @@ public:
 	bool left() const;
 
 	bool right() const;
-	
+
 	bool up() const;
 
 	void update(ControllerManager & controller, const std::int64_t ms);
 
-private:	
+private:
 	std::array<int, 6> back_off_time;
 	std::array<bool, 6> state;
 };
 
-}   }
+}
 
 #endif

@@ -1,7 +1,7 @@
 #include "Controller.hpp"
 
 
-namespace lp3 { namespace timtris {
+namespace timtris {
 
 namespace input = lp3::input;
 
@@ -45,7 +45,7 @@ void ControllerManager::update() {
 
 
 CursorPad::CursorPad()
-{	
+{
 }
 
 void CursorPad::init(ControllerManager & controls) {
@@ -132,4 +132,4 @@ void CursorPad::update(ControllerManager & controls, const std::int64_t ms) {
 	}
 }
 
-}   }   // end namespace
+}   // end namespace
